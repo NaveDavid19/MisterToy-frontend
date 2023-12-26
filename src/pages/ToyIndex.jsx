@@ -7,6 +7,7 @@ import { ToyFilter } from "../cmps/ToyFilter";
 export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
     const filterBy = useSelector(storeState => storeState.toyModule.filterBy)
+    const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
     useEffect(() => {
         loadToys()
@@ -24,11 +25,11 @@ export function ToyIndex() {
         setFilterBy(filterBy)
     }
 
-    if (!toys || !toys.length) return <div> loading...</div>
     return (
         <div>
             <ToyFilter {...{ filterBy, onSetFilter }} />
-            <ToyList {...{ toys, onRemoveToy }} />
+            {!isLoading && <ToyList {...{ toys, onRemoveToy }} />}
+            {isLoading && <div>Loading...</div>}
         </div>
     )
 }

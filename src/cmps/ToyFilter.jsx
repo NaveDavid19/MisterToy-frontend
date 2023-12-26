@@ -16,7 +16,6 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         let { value, name: field, type } = target
         value = type === 'number' ? +value : value
         setFilterByToEdit((prevFilter) => {
-            console.log("prevFilter:", prevFilter)
             return ({ ...prevFilter, [field]: value })
         })
     }
@@ -42,7 +41,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
                     value={filterByToEdit.maxPrice || ''}
                     onChange={handleChange}
                 />
-                <select onChange={handleChange} name="stock" id="stock">
+                <select onChange={handleChange} name="inStock" id="inStock">
                     <option value="all">All</option>
                     <option value="inStock">in Stock</option>
                     <option value="outOfStock">Out of stock</option>

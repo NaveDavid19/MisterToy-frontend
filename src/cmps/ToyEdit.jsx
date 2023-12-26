@@ -26,7 +26,12 @@ export function ToyEdit() {
     function handleChange({ target }) {
         const field = target.name
         let value = target.value
-        value = value === "true"
+        if (field === 'inStock') {
+            value = value === "true"
+        }
+        if (field === 'price') {
+            value = +value
+        }
         setToy(prevToy => ({ ...prevToy, [field]: value }))
     }
 
@@ -42,6 +47,8 @@ export function ToyEdit() {
             <form onSubmit={handleSubmit}>
                 <label htmlFor="name">Name : </label>
                 <input value={toy.name} onChange={handleChange} type="text" id="name" name="name" />
+                <label htmlFor="price">Price : </label>
+                <input value={toy.price} onChange={handleChange} type="text" id="price" name="price" />
                 <button>Save</button>
             </form>
             <select onChange={handleChange} name="inStock" id="inStock">
