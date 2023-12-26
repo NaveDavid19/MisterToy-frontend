@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom"
 import { toyService } from "../services/toy.service"
 import { saveToy } from '../store/actions/toy.actions'
 import { useNavigate } from "react-router-dom"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
 export function ToyEdit() {
     const navigate = useNavigate()
@@ -38,6 +39,13 @@ export function ToyEdit() {
     function handleSubmit(ev) {
         ev.preventDefault()
         saveToy(toy)
+            .then(() => {
+                showSuccessMsg('Toy saved successfully')
+                navigate('/toy')
+            })
+            .catch((err) => {
+                showErrorMsg('Can not save toy, please try again')
+            })
         navigate('/toy')
     }
 

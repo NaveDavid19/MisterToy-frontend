@@ -1,5 +1,4 @@
-import { useDispatch, useSelector } from 'react-redux'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { UserMsg } from './UserMsg.jsx'
 
@@ -16,6 +15,7 @@ export function AppHeader() {
                 <nav className="app-nav">
                     <NavLink to="/" >Home</NavLink>
                     <NavLink to="/toy" >Toys</NavLink>
+                    <NavLink to="/dashboard" >Dashboard</NavLink>
                     <NavLink to="/about" >About</NavLink>
                 </nav>
             </section>

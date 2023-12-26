@@ -1,7 +1,8 @@
 import { httpService } from "./http.service"
 
 const BASE_URL = 'toy/'
-
+const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle',
+    'Outdoor', 'Battery Powered']
 // const STORAGE_KEY = 'toyDB'
 // _createToys()
 
@@ -10,12 +11,17 @@ export const toyService = {
     getById,
     save,
     remove,
-    getDefaultFilter
+    getDefaultFilter,
+    getLables
 }
 
 
 function query(filterBy = {}) {
     return httpService.get(BASE_URL, filterBy)
+}
+
+function getLables() {
+    return [...labels]
 }
 
 function getById(toyId) {

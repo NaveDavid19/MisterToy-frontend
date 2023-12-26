@@ -21,7 +21,7 @@ export function loadToys() {
 }
 
 export function removeToy(toyId) {
-    toyService.remove(toyId)
+    return toyService.remove(toyId)
         .then(() => {
             store.dispatch({ type: REMOVE_TOY, toyId })
         })

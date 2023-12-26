@@ -9,6 +9,8 @@ import { ToyIndex } from './pages/ToyIndex'
 import { ToyDetails } from './cmps/ToyDetails'
 import { AppFooter } from './cmps/AppFooter'
 import { ToyEdit } from './cmps/ToyEdit'
+import { Dashboard } from './pages/DashBoard'
+import { UserMsg } from './cmps/UserMsg'
 
 
 
@@ -28,7 +30,9 @@ export function App() {
               <Route element={<ToyIndex />} path="/toy" />
               <Route element={<ToyDetails />} path="/toy/:toyId" />
               <Route element={<ToyEdit />} path="/toy/edit/:toyId" />
+              <Route element={<Dashboard />} path="/dashboard" />
             </Routes>
+            <UserMsg />
           </main>
           <AppFooter />
         </section>
