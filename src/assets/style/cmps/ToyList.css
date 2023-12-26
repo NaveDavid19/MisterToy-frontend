@@ -11,3 +11,7 @@
     background-color: var(--clr1bg);
     margin: 0.5em;
 }
+
+.toy-preview {
+    width: 250px;
+}

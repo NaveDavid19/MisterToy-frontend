@@ -4,6 +4,9 @@ import { loadToys, removeToy, saveToy, setFilterBy } from "../store/actions/toy.
 import { ToyList } from "../cmps/ToyList";
 import { ToyFilter } from "../cmps/ToyFilter";
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service";
+import { toyService } from "../services/toy.service";
+import Button from '@mui/material/Button';
+
 
 export function ToyIndex() {
     const toys = useSelector(storeState => storeState.toyModule.toys)
@@ -35,9 +38,14 @@ export function ToyIndex() {
         setFilterBy(filterBy)
     }
 
+    function onAddToy() {
+        saveToy(toyService.getEmptyToy())
+    }
+
     return (
         <div>
             <ToyFilter {...{ filterBy, onSetFilter }} />
+            <Button size="small" onClick={onAddToy} variant="contained">Add Toy</Button>
             {!isLoading && <ToyList {...{ toys, onRemoveToy }} />}
             {isLoading && <div>Loading...</div>}
         </div>

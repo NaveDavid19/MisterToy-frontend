@@ -5,7 +5,8 @@ export const utilService = {
     loadFromStorage,
     saveToStorage,
     debounce,
-    timestampToDate
+    timestampToDate,
+    getRandomLabels
 }
 
 function makeId(length = 6) {
@@ -20,7 +21,8 @@ function makeId(length = 6) {
 }
 
 function makeLorem(size = 100) {
-    var words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', '.', 'All', 'this happened', 'more or less', '.', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', '.', 'It', 'was', 'a pleasure', 'to', 'burn']
+    var words = ['The sky', 'above', 'the port', 'was', 'the color of television', 'tuned', 'to', 'a dead channel', 'home', 'All', 'this happened', 'more or less', 'To', 'I', 'had', 'the story', 'bit by bit', 'from various people', 'and', 'as generally', 'happens', 'in such cases', 'each time', 'it', 'was', 'a different story', 'Heaven', 'It', 'was', 'a pleasure', 'to', 'burn'];
+
     var txt = ''
     while (size > 0) {
         size--
@@ -28,6 +30,7 @@ function makeLorem(size = 100) {
     }
     return txt
 }
+
 
 function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
@@ -62,4 +65,22 @@ function timestampToDate(timestamp) {
 
     return `${year}-${month}-${day}`
 }
+
+function getRandomLabels() {
+    const labels = ['On wheels', 'Box game', 'Art', 'Baby', 'Doll', 'Puzzle', 'Outdoor', 'Battery Powered'];
+    const randomLabels = [];
+
+    while (randomLabels.length < 2) {
+        const randomIndex = Math.floor(Math.random() * labels.length);
+        const randomLabel = labels[randomIndex];
+
+        if (!randomLabels.includes(randomLabel)) {
+            randomLabels.push(randomLabel);
+        }
+    }
+
+    return randomLabels;
+}
+
+
 

@@ -5,6 +5,15 @@ import { saveToy } from '../store/actions/toy.actions'
 import { useNavigate } from "react-router-dom"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+import Button from '@mui/material/Button';
+
+
+
 export function ToyEdit() {
     const navigate = useNavigate()
     const { toyId } = useParams()
@@ -49,20 +58,36 @@ export function ToyEdit() {
         navigate('/toy')
     }
 
+    function handleKeyDown(ev) {
+        if (ev.key === 'Enter') {
+            handleSubmit(ev);
+        }
+    }
+
     if (!toy) return <div>Loading...</div>
     return (
-        <section>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="name">Name : </label>
-                <input value={toy.name} onChange={handleChange} type="text" id="name" name="name" />
-                <label htmlFor="price">Price : </label>
-                <input value={toy.price} onChange={handleChange} type="text" id="price" name="price" />
-                <button>Save</button>
+        <section className="toy-details">
+            <h1>Edit Toy</h1>
+            <form className="toy-details" onSubmit={handleSubmit}>
+                <TextField onKeyDown={handleKeyDown} onChange={handleChange} id="name" name="name" value={toy.name} label="name" variant="standard" />
+                <img src={toy.img} alt={toy.name} />
+                <TextField onKeyDown={handleKeyDown} onChange={handleChange} id="price" name="price" value={toy.price} label="price" variant="standard" />
+                <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                    <InputLabel id="inStock-label">Stock</InputLabel>
+                    <Select
+                        labelId="inStock-label"
+                        id="inStock"
+                        name="inStock"
+                        value={toy.inStock}
+                        onChange={handleChange}
+                        onKeyDown={handleKeyDown}
+                    >
+                        <MenuItem value="true">in Stock</MenuItem>
+                        <MenuItem value="false">Out of stock</MenuItem>
+                    </Select>
+                </FormControl>
+                <Button onClick={handleSubmit} variant="contained">Save</Button>
             </form>
-            <select onChange={handleChange} name="inStock" id="inStock">
-                <option value="true">In stock</option>
-                <option value="false">Out of stock</option>
-            </select>
         </section>
-    )
+    );
 }

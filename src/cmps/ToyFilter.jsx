@@ -1,6 +1,13 @@
 import { useEffect, useRef, useState } from "react"
 import { utilService } from "../services/util.service"
 
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import FormControl from '@mui/material/FormControl';
+import Select from '@mui/material/Select';
+import TextField from '@mui/material/TextField';
+
+
 
 
 export function ToyFilter({ filterBy, onSetFilter }) {
@@ -23,32 +30,38 @@ export function ToyFilter({ filterBy, onSetFilter }) {
     return (
         <section className="toy-filter full main-layout">
             <h2>Toys Filter</h2>
-            <form >
-                <label htmlFor="txt">Name:</label>
-                <input type="text"
-                    id="txt"
-                    name="txt"
-                    placeholder="By name"
-                    value={filterByToEdit.txt}
-                    onChange={handleChange}
-                />
-
-                <label htmlFor="maxPrice">Max price:</label>
-                <input type="number"
-                    id="maxPrice"
-                    name="maxPrice"
-                    placeholder="By max price"
-                    value={filterByToEdit.maxPrice || ''}
-                    onChange={handleChange}
-                />
-                <select onChange={handleChange} name="inStock" id="inStock">
-                    <option value="all">All</option>
-                    <option value="inStock">in Stock</option>
-                    <option value="outOfStock">Out of stock</option>
-                </select>
-
+            <form className="filter-form" >
+                <div className="input">
+                    <TextField onChange={handleChange} id="txt" name="txt" value={filterByToEdit.txt} label="By name" variant="standard" />
+                </div>
+                <div className="input">
+                    <TextField onChange={handleChange} id="maxPrice" name="maxPrice" value={filterByToEdit.maxPrice} label="By max price" variant="standard" />
+                </div>
+                <div className="select">
+                    <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
+                        <InputLabel id="inStock-label">Stock</InputLabel>
+                        <Select
+                            labelId="inStock-label"
+                            id="inStock"
+                            name="inStock"
+                            value={filterByToEdit.inStock}
+                            onChange={handleChange}
+                        >
+                            <MenuItem value="all">All</MenuItem>
+                            <MenuItem value="inStock">in Stock</MenuItem>
+                            <MenuItem value="outOfStock">Out of stock</MenuItem>
+                        </Select>
+                    </FormControl>
+                </div>
             </form>
 
         </section>
     )
 }
+
+
+
+
+
+
+

@@ -1,4 +1,13 @@
 .toy-filter {
-    background-color: var(--clr2bg);
+    background-color: lightblue;
     padding: 1em;
+}
+
+.input {
+    margin-right: 10px;
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
 }
