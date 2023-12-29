@@ -11,7 +11,7 @@ export const options = {
     plugins: {
         title: {
             display: true,
-            text: 'Chart of stock of each product ',
+            text: 'Stock of each product ',
         }
     },
 };

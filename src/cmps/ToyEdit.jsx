@@ -23,21 +23,22 @@ export function ToyEdit() {
         loadToy()
     }, [])
 
-    function loadToy() {
-        toyService.getById(toyId)
-            .then(toy => setToy(toy))
-            .catch((err) => {
-                console.log('Had issues in toy details', err)
-                showErrorMsg('Cannot load toy')
-                navigate('/toy')
-            })
+    async function loadToy() {
+        try {
+            const toy = await toyService.getById(toyId)
+            setToy(toy)
+        } catch (err) {
+            console.log('Had issues in toy details', err)
+            showErrorMsg('Cannot load toy')
+            navigate('/toy')
+        }
     }
 
     function handleChange({ target }) {
         const field = target.name
         let value = target.value
         if (field === 'inStock') {
-            value = value === "true"
+            value = value === 'In Stock'
         }
         if (field === 'price') {
             value = +value
@@ -45,22 +46,15 @@ export function ToyEdit() {
         setToy(prevToy => ({ ...prevToy, [field]: value }))
     }
 
-    function handleSubmit(ev) {
+    async function handleSubmit(ev) {
         ev.preventDefault()
-        saveToy(toy)
-            .then(() => {
-                showSuccessMsg('Toy saved successfully')
-                navigate('/toy')
-            })
-            .catch((err) => {
-                showErrorMsg('Can not save toy, please try again')
-            })
-        navigate('/toy')
-    }
-
-    function handleKeyDown(ev) {
-        if (ev.key === 'Enter') {
-            handleSubmit(ev);
+        try {
+            await saveToy(toy)
+            showSuccessMsg('Toy saved successfully')
+        } catch (err) {
+            showErrorMsg('Can not save toy, please try again')
+        } finally {
+            navigate('/toy')
         }
     }
 
@@ -68,24 +62,25 @@ export function ToyEdit() {
     return (
         <section className="toy-details">
             <h1>Edit Toy</h1>
-            <form className="toy-details" onSubmit={handleSubmit}>
-                <TextField onKeyDown={handleKeyDown} onChange={handleChange} id="name" name="name" value={toy.name} label="name" variant="standard" />
-                <img src={toy.img} alt={toy.name} />
-                <TextField onKeyDown={handleKeyDown} onChange={handleChange} id="price" name="price" value={toy.price} label="price" variant="standard" />
+            <img src={toy.img} alt={toy.name} />
+            <form className="edit-inputs" onSubmit={handleSubmit}>
+                <TextField onChange={handleChange} id="name" name="name" value={toy.name} label="name" variant="outlined" />
+                <TextField onChange={handleChange} id="price" name="price" value={toy.price} label="price" variant="outlined" />
                 <FormControl variant="filled" sx={{ m: 1, minWidth: 120 }}>
                     <InputLabel id="inStock-label">Stock</InputLabel>
                     <Select
                         labelId="inStock-label"
                         id="inStock"
                         name="inStock"
-                        value={toy.inStock}
+                        value={toy.inStock ? 'In Stock' : 'Out Of Stock'}
                         onChange={handleChange}
-                        onKeyDown={handleKeyDown}
+
                     >
-                        <MenuItem value="true">in Stock</MenuItem>
-                        <MenuItem value="false">Out of stock</MenuItem>
+                        <MenuItem value={'In Stock'}>in Stock</MenuItem>
+                        <MenuItem value={'Out Of Stock'}>Out of stock</MenuItem>
                     </Select>
                 </FormControl>
+                <button hidden></button>
                 <Button onClick={handleSubmit} variant="contained">Save</Button>
             </form>
         </section>

@@ -14,40 +14,44 @@ export function ToyIndex() {
     const isLoading = useSelector(storeState => storeState.toyModule.isLoading)
 
     useEffect(() => {
-        loadToys()
-            .catch((err) => {
-                showErrorMsg('Oops.. something went wrong, try again')
-            })
+        try {
+            loadToys()
+            console.log('toys:', toys);
+        } catch (err) {
+            showErrorMsg('Oops.. something went wrong, try again')
+        }
     }, [filterBy])
 
-    function onRemoveToy(toyId) {
-        removeToy(toyId)
-            .then(() => {
-                showSuccessMsg('Toy removed successfully')
-            })
-            .catch(err => {
-                showErrorMsg('Cant remove toy, try again.')
-            })
+    async function onRemoveToy(toyId) {
+        try {
+            await removeToy(toyId)
+            showSuccessMsg('Toy removed successfully')
+        } catch (err) {
+            showErrorMsg('Cant remove toy, try again.')
+        }
     }
 
-    function onEditToy(toy) {
-        saveToy(toy)
-    }
+    // function onEditToy(toy) {
+    //     saveToy(toy)
+    // }
 
     function onSetFilter(filterBy) {
         setFilterBy(filterBy)
     }
 
     function onAddToy() {
-        saveToy(toyService.getEmptyToy())
+        let toy = toyService.getEmptyToy()
+        saveToy(toy)
     }
 
     return (
-        <div>
+        <>
             <ToyFilter {...{ filterBy, onSetFilter }} />
-            <Button size="small" onClick={onAddToy} variant="contained">Add Toy</Button>
+            <div className="btn-add">
+                <Button size="small" onClick={onAddToy} variant="contained">Add Toy</Button>
+            </div>
             {!isLoading && <ToyList {...{ toys, onRemoveToy }} />}
             {isLoading && <div>Loading...</div>}
-        </div>
+        </>
     )
 }

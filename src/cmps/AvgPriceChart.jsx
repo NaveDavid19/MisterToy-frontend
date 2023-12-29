@@ -11,7 +11,7 @@ export const options = {
     plugins: {
         title: {
             display: true,
-            text: 'Chart of avg prices of each product ',
+            text: 'Avg prices of each product',
         }
     },
 };

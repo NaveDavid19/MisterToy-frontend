@@ -1,8 +1,8 @@
-import logoPng from '../assets/img/logo.png';
+import logoPng from '../assets/img/toy-story.jpeg';
 
 export function Home() {
     return (
-        <section>
+        <section className="home">
             <img src={logoPng} alt="Logo" />
         </section>
     );

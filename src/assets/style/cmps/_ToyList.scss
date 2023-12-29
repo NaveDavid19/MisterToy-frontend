@@ -1,0 +1,23 @@
+.toy-list {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    list-style: none;
+    padding-inline-start: 0;
+}
+
+.toy-list li {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--clr1bg);
+    margin: 0.5em;
+    border-radius: 15px;
+}
+
+
+.toy-preview {
+    width: 300px;
+    height: 400px;
+}

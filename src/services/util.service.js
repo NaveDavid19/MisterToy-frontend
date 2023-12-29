@@ -78,7 +78,6 @@ function getRandomLabels() {
             randomLabels.push(randomLabel);
         }
     }
-
     return randomLabels;
 }
 

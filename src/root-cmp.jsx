@@ -1,6 +1,6 @@
 import { Route, Routes, BrowserRouter as Router } from 'react-router-dom'
 import { Provider } from 'react-redux'
-import './assets/style/main.css'
+import './assets/style/main.scss'
 import { Home } from './pages/Home'
 import { About } from './pages/About'
 import { store } from './store/store'
@@ -21,9 +21,9 @@ export function App() {
   return (
     <Provider store={store}>
       <Router>
-        <section className="main-layout app">
+        <section className="main-layout">
           <AppHeader />
-          <main>
+          <main className="main-layout full" >
             <Routes>
               <Route element={<Home />} path="/" />
               <Route element={<About />} path="/about" />
