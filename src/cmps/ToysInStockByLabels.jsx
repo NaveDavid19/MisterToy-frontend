@@ -1,4 +1,4 @@
-import { React } from "react"
+import { React, useEffect, useState } from "react"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,6 @@ import {
 } from "chart.js"
 import { Bar } from "react-chartjs-2"
 
-import { toyService } from "../services/toy.service"
 import { useSelector } from "react-redux"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
@@ -24,11 +23,30 @@ export const options = {
   },
 }
 
-const totalStock = [10, 7, 2, 12, 5, 7, 3, 25]
-const inStock = [5, 2, 5, 1, 5, 2, 5, 15]
-
 export function ToysInStockByLables() {
   const labels = useSelector((storeState) => storeState.toyModule.labels)
+  const toys = useSelector((storeState) => storeState.toyModule.toys)
+  const [totalStock, setTotalStock] = useState([])
+  const [inStock, setInStock] = useState([])
+
+  useEffect(() => {
+    calculateStockData()
+  }, [])
+
+  function calculateStockData() {
+    const calculatedTotalStock = labels.map((label) => {
+      const labelToys = toys.filter((toy) => toy.labels.includes(label))
+      return labelToys.length
+    })
+
+    const calculatedInStock = labels.map((label) => {
+      const labelToys = toys.filter((toy) => toy.labels.includes(label))
+      return labelToys.reduce((sum, toy) => sum + toy.inStock, 0)
+    })
+
+    setTotalStock(calculatedTotalStock)
+    setInStock(calculatedInStock)
+  }
   const data = {
     labels,
     datasets: [

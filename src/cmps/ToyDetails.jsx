@@ -33,6 +33,7 @@ export function ToyDetails() {
         <h1>Name: {toy.name}</h1>
         <img src={toy.img} />
         <h2>Price: {toy.price}$</h2>
+        <h3>Owner: {toy.owner}</h3>
         <h3>Stock: {toy.inStock ? "In stock" : "Out of stock"}</h3>
         <h3>Labels: {toy.labels.join(", ")}</h3>
         <h4>Created At: {utilService.timestampToDate(toy.createdAt)}</h4>

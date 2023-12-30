@@ -1,4 +1,4 @@
-import { React } from "react"
+import { React, useEffect, useState } from "react"
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -9,7 +9,6 @@ import {
 } from "chart.js"
 import { Bar } from "react-chartjs-2"
 
-import { toyService } from "../services/toy.service"
 import { useSelector } from "react-redux"
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip)
@@ -26,15 +25,45 @@ export const options = {
 
 export function AvgPriceChart() {
   const labels = useSelector((storeState) => storeState.toyModule.labels)
+  const toys = useSelector((storeState) => storeState.toyModule.toys)
+  const [avgPrices, setAvgPrices] = useState([])
 
-  const test = [5, 2, 5, 1, 5, 2, 3, 15]
+  useEffect(() => {
+    calculateAvgPriceForLabels()
+  }, [])
+
+  function calculateAvgPriceForLabels() {
+    const avgPricesPerLabel = {}
+
+    toys.forEach((toy) => {
+      toy.labels.forEach((label) => {
+        if (!avgPricesPerLabel[label]) {
+          avgPricesPerLabel[label] = {
+            total: 0,
+            count: 0,
+          }
+        }
+
+        avgPricesPerLabel[label].total += toy.price
+        avgPricesPerLabel[label].count += 1
+      })
+    })
+
+    const result = {}
+    for (const label in avgPricesPerLabel) {
+      const { total, count } = avgPricesPerLabel[label]
+      result[label] = total / count || 0
+    }
+
+    setAvgPrices(result)
+  }
 
   const data = {
     labels,
     datasets: [
       {
         label: "Avg price",
-        data: test,
+        data: avgPrices,
         backgroundColor: "rgba(255, 99, 132, 0.5)",
       },
     ],

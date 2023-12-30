@@ -18,6 +18,10 @@ export function ToyIndex() {
   const toys = useSelector((storeState) => storeState.toyModule.toys)
   const filterBy = useSelector((storeState) => storeState.toyModule.filterBy)
   const isLoading = useSelector((storeState) => storeState.toyModule.isLoading)
+  const loggedinUser = useSelector(
+    (storeState) => storeState.userModule.loggedinUser
+  )
+  console.log("loggedinUser:", loggedinUser)
 
   useEffect(() => {
     try {
@@ -57,8 +61,18 @@ export function ToyIndex() {
     setFilterBy(filterBy)
   }
 
+  async function onAddToCart(toy) {
+    try {
+      await addToCart(toy)
+      showSuccessMsg("Added to Cart")
+    } catch (err) {
+      showErrorMsg("Cant add toy, try again.")
+    }
+  }
+
   function onAddToy() {
-    let toy = toyService.getEmptyToy()
+    const toy = toyService.getEmptyToy()
+    toy.owner = loggedinUser.fullname
     saveToy(toy)
   }
 
@@ -70,7 +84,7 @@ export function ToyIndex() {
           Add Toy
         </Button>
       </div>
-      {!isLoading && <ToyList {...{ toys, onRemoveToy }} />}
+      {!isLoading && <ToyList {...{ toys, onRemoveToy, onAddToCart }} />}
       {isLoading && <div>Loading...</div>}
     </>
   )

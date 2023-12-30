@@ -36,3 +36,11 @@
     gap: 10px;
     margin-bottom: 10px
 }
+
+.test div{
+    background-color: red;
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+
+}

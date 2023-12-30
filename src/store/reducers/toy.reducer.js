@@ -1,14 +1,13 @@
 import { toyService } from "../../services/toy.service"
-
+//toy
 export const SET_TOYS = "SET_TOYS"
 export const REMOVE_TOY = "REMOVE_TOY"
 export const ADD_TOY = "ADD_TOY"
 export const UPDATE_TOY = "UPDATE_TOY"
-
+//filterBy
 export const SET_FILTER_BY = "SET_FILTER_BY"
-
+//loading
 export const SET_IS_LOADING = "SET_IS_LOADING"
-
 export const LOAD_LABELS = "LOAD_LABELS"
 
 const initialState = {
