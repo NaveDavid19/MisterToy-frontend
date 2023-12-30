@@ -12,6 +12,7 @@ import { ToyFilter } from "../cmps/ToyFilter"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { toyService } from "../services/toy.service"
 import Button from "@mui/material/Button"
+import { addToCart } from "../store/actions/user.actions"
 
 export function ToyIndex() {
   const labels = useSelector((storeState) => storeState.toyModule.labels)
@@ -21,7 +22,6 @@ export function ToyIndex() {
   const loggedinUser = useSelector(
     (storeState) => storeState.userModule.loggedinUser
   )
-  console.log("loggedinUser:", loggedinUser)
 
   useEffect(() => {
     try {
@@ -53,10 +53,6 @@ export function ToyIndex() {
     }
   }
 
-  // function onEditToy(toy) {
-  //     saveToy(toy)
-  // }
-
   function onSetFilter(filterBy) {
     setFilterBy(filterBy)
   }
@@ -79,11 +75,14 @@ export function ToyIndex() {
   return (
     <>
       <ToyFilter {...{ filterBy, onSetFilter }} />
-      <div className="btn-add">
-        <Button size="small" onClick={onAddToy} variant="contained">
-          Add Toy
-        </Button>
-      </div>
+      {loggedinUser && (
+        <div className="btn-add">
+          <Button size="small" onClick={onAddToy} variant="contained">
+            Add Toy
+          </Button>
+        </div>
+      )}
+
       {!isLoading && <ToyList {...{ toys, onRemoveToy, onAddToCart }} />}
       {isLoading && <div>Loading...</div>}
     </>

@@ -54,5 +54,6 @@ function getEmptyToy() {
     createdAt: Date.now(),
     img: "https://upload.wikimedia.org/wikipedia/he/b/b4/Buzz_Lightyear.png",
     inStock: getRandomStock(),
+    msgs: [],
   }
 }
