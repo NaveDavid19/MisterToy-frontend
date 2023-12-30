@@ -1,17 +1,7 @@
-import { httpService } from "./http.service";
-import { utilService } from "./util.service";
+import { httpService } from "./http.service"
+import { utilService } from "./util.service"
 
-const BASE_URL = "toy/";
-const labels = [
-  "On wheels",
-  "Box game",
-  "Art",
-  "Baby",
-  "Doll",
-  "Puzzle",
-  "Outdoor",
-  "Battery Powered",
-];
+const BASE_URL = "/toy"
 
 export const toyService = {
   query,
@@ -19,46 +9,41 @@ export const toyService = {
   save,
   remove,
   getDefaultFilter,
-  getLables,
+  getLabels,
   getEmptyToy,
-};
-
-function query(filterBy = {}) {
-  // filterBy = {
-  //     ...filterBy,
-  //     maxPrice: filterBy.maxPrice ? filterBy.maxPrice : Infinity,
-  //     label: filterBy.label.length ? filterBy.label : getLables()
-  // }
-  return httpService.get(BASE_URL, filterBy);
 }
 
-function getLables() {
-  return [...labels];
+function query(filterBy = {}) {
+  return httpService.get(BASE_URL, filterBy)
+}
+
+function getLabels() {
+  return httpService.get(`${BASE_URL}/labels`)
 }
 
 function getById(toyId) {
-  return httpService.get(BASE_URL + toyId);
+  return httpService.get(`${BASE_URL}/${toyId}`)
 }
 
 function remove(toyId) {
-  return httpService.delete(BASE_URL + toyId);
+  return httpService.delete(`${BASE_URL}/${toyId}`)
 }
 
 function save(toy) {
   if (toy._id) {
-    return httpService.put(BASE_URL, toy);
+    return httpService.put(BASE_URL, toy)
   } else {
-    return httpService.post(BASE_URL, toy);
+    return httpService.post(BASE_URL, toy)
   }
 }
 
 function getDefaultFilter() {
-  return { txt: "", maxPrice: "", inStock: "all", label: [] };
+  return { txt: "", maxPrice: "", inStock: "all", label: [] }
 }
 
 function getRandomStock() {
-  const x = Math.random();
-  return x > 0.5 ? true : false;
+  const x = Math.random()
+  return x > 0.5 ? true : false
 }
 
 function getEmptyToy() {
@@ -69,5 +54,5 @@ function getEmptyToy() {
     createdAt: Date.now(),
     img: "https://upload.wikimedia.org/wikipedia/he/b/b4/Buzz_Lightyear.png",
     inStock: getRandomStock(),
-  };
+  }
 }

@@ -1,21 +1,21 @@
-import { useEffect, useRef, useState } from "react";
-import { utilService } from "../services/util.service";
+import { useEffect, useRef, useState } from "react"
+import { utilService } from "../services/util.service"
 
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
-import { toyService } from "../services/toy.service";
-import Checkbox from "@mui/material/Checkbox";
+import InputLabel from "@mui/material/InputLabel"
+import MenuItem from "@mui/material/MenuItem"
+import FormControl from "@mui/material/FormControl"
+import Select from "@mui/material/Select"
+import TextField from "@mui/material/TextField"
+import { toyService } from "../services/toy.service"
+import Checkbox from "@mui/material/Checkbox"
+import { useSelector } from "react-redux"
 
 export function ToyFilter({ filterBy, onSetFilter }) {
-  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy });
-  const [selectedLabels, setSelectedLabels] = useState([]);
+  const labels = useSelector((storeState) => storeState.toyModule.labels)
+  const [filterByToEdit, setFilterByToEdit] = useState({ ...filterBy })
+  const [selectedLabels, setSelectedLabels] = useState([])
 
-  onSetFilter = useRef(utilService.debounce(onSetFilter));
-
-  const toyLabels = toyService.getLables();
+  onSetFilter = useRef(utilService.debounce(onSetFilter))
 
   useEffect(() => {
     if (
@@ -26,20 +26,20 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         filterBy.label === filterByToEdit.label
       )
     ) {
-      onSetFilter.current(filterByToEdit);
+      onSetFilter.current(filterByToEdit)
     }
-  }, [filterByToEdit]);
+  }, [filterByToEdit])
 
   function handleChange({ target }) {
-    let { value, name: field, type } = target;
+    let { value, name: field, type } = target
     if (field === "label") {
-      setSelectedLabels(value);
-      setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }));
+      setSelectedLabels(value)
+      setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
     } else {
-      value = type === "number" ? +value : value;
+      value = type === "number" ? +value : value
       setFilterByToEdit((prevFilter) => {
-        return { ...prevFilter, [field]: value };
-      });
+        return { ...prevFilter, [field]: value }
+      })
     }
   }
 
@@ -95,7 +95,7 @@ export function ToyFilter({ filterBy, onSetFilter }) {
               onChange={handleChange}
               renderValue={(selected) => selected.join(", ")}
             >
-              {toyLabels.map((label) => (
+              {labels.map((label) => (
                 <MenuItem key={label} value={label}>
                   <Checkbox checked={selectedLabels.indexOf(label) > -1} />
                   {label}
@@ -106,5 +106,5 @@ export function ToyFilter({ filterBy, onSetFilter }) {
         </div>
       </form>
     </section>
-  );
+  )
 }
