@@ -58,6 +58,16 @@ export async function saveToy(toy) {
     throw err
   }
 }
+export async function saveToyMsg(toyId, txt) {
+  try {
+    const toyToSave = await toyService.saveMsg(toyId, txt)
+    store.dispatch({ type: UPDATE_TOY, toy: toyToSave })
+    return toyToSave
+  } catch (err) {
+    console.log("toy action -> Cannot save toy", err)
+    throw err
+  }
+}
 
 export function setFilterBy(filterBy) {
   store.dispatch({ type: SET_FILTER_BY, filterBy })

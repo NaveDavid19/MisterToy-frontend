@@ -4,10 +4,10 @@ import { useParams, Link } from "react-router-dom"
 import { utilService } from "../services/util.service"
 import { useNavigate } from "react-router-dom"
 import Button from "@mui/material/Button"
-import { showErrorMsg } from "../services/event-bus.service"
+import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { ToyMsg } from "./ToyMsg"
 import { useSelector } from "react-redux"
-import { saveToy } from "../store/actions/toy.actions"
+import { saveToyMsg } from "../store/actions/toy.actions"
 
 export function ToyDetails({ onUpdateToy }) {
   const loggedinUser = useSelector(
@@ -32,23 +32,21 @@ export function ToyDetails({ onUpdateToy }) {
     }
   }
 
-  function onAddMsg() {
+  async function onAddMsg() {
     const msg = {}
     msg.txt = prompt("Add a msg")
-    setToy((prevToy) => {
-      const updatedToy = {
-        ...prevToy,
-        msgs: [...prevToy.msgs, { txt: msg.txt, id: loggedinUser._id }],
-      }
-      onUpdateToy(updatedToy)
-      return updatedToy
-    })
+    const returnedMsg = await onUpdateToy(toy._id, msg.txt)
+    setToy((prevToy) => ({
+      ...prevToy,
+      msgs: [...prevToy.msgs, returnedMsg],
+    }))
   }
 
-  async function onUpdateToy(toy) {
+  async function onUpdateToy(toyId, txt) {
     try {
-      await saveToy(toy)
+      const msgggggg = await saveToyMsg(toyId, txt)
       showSuccessMsg("Toy saved successfully")
+      return msgggggg
     } catch (err) {
       showErrorMsg("Can not save toy, please try again")
     }
