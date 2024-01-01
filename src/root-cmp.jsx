@@ -11,7 +11,6 @@ import { AppFooter } from "./cmps/AppFooter"
 import { ToyEdit } from "./cmps/ToyEdit"
 import { UserMsg } from "./cmps/UserMsg"
 import { Dashboard } from "./pages/Dashboard"
-import { ShoppingCart } from "./cmps/ShoppingCart"
 
 export function App() {
   return (

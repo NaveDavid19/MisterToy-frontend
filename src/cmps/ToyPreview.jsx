@@ -3,7 +3,7 @@ import Button from "@mui/material/Button"
 import Stack from "@mui/material/Stack"
 import { useSelector } from "react-redux"
 
-export function ToyPreview({ toy, onRemoveToy, onAddToCart }) {
+export function ToyPreview({ toy, onRemoveToy }) {
   const loggedinUser = useSelector(
     (storeState) => storeState.userModule.loggedinUser
   )

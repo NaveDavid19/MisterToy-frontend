@@ -12,7 +12,6 @@ import { ToyFilter } from "../cmps/ToyFilter"
 import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service"
 import { toyService } from "../services/toy.service"
 import Button from "@mui/material/Button"
-import { addToCart } from "../store/actions/user.actions"
 
 export function ToyIndex() {
   const labels = useSelector((storeState) => storeState.toyModule.labels)
@@ -57,15 +56,6 @@ export function ToyIndex() {
     setFilterBy(filterBy)
   }
 
-  async function onAddToCart(toy) {
-    try {
-      await addToCart(toy)
-      showSuccessMsg("Added to Cart")
-    } catch (err) {
-      showErrorMsg("Cant add toy, try again.")
-    }
-  }
-
   function onAddToy() {
     const toy = toyService.getEmptyToy()
     toy.owner = loggedinUser.fullname
@@ -83,7 +73,7 @@ export function ToyIndex() {
         </div>
       )}
 
-      {!isLoading && <ToyList {...{ toys, onRemoveToy, onAddToCart }} />}
+      {!isLoading && <ToyList {...{ toys, onRemoveToy }} />}
       {isLoading && <div>Loading...</div>}
     </>
   )
