@@ -16,30 +16,9 @@
     max-width: 150px;
 }
 
-
-.toy-details {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: var(--clr1bg);
-    width: 350px;
-    border-radius: 15px;
-    margin: auto;
-    margin-top: 20px;
-}
-
-
 .edit-inputs {
     display: flex;
     flex-direction: column;
     gap: 10px;
     margin-bottom: 10px
-}
-
-.test div{
-    background-color: red;
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
 }

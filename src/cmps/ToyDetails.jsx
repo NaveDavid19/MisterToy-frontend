@@ -42,6 +42,10 @@ export function ToyDetails({ onUpdateToy }) {
     }))
   }
 
+  async function onAddReview() {
+    const review = {}
+  }
+
   async function onUpdateToy(toyId, txt) {
     try {
       const msgggggg = await saveToyMsg(toyId, txt)
@@ -63,7 +67,7 @@ export function ToyDetails({ onUpdateToy }) {
         <h3>Stock: {toy.inStock ? "In stock" : "Out of stock"}</h3>
         <h3>Labels: {toy.labels.join(", ")}</h3>
         <h4>Created At: {utilService.timestampToDate(toy.createdAt)}</h4>
-        <div>
+        <div className="details-btns">
           <Link to="/toy">
             {" "}
             <Button size="small" variant="contained">
@@ -71,14 +75,24 @@ export function ToyDetails({ onUpdateToy }) {
             </Button>
           </Link>
           {loggedinUser && (
-            <Button
-              onClick={onAddMsg}
-              style={{ marginLeft: "17px" }}
-              size="small"
-              variant="contained"
-            >
-              Add msg
-            </Button>
+            <div>
+              <Button
+                onClick={onAddMsg}
+                style={{ marginLeft: "17px" }}
+                size="small"
+                variant="contained"
+              >
+                Add msg
+              </Button>
+              <Button
+                onClick={onAddReview}
+                style={{ marginLeft: "17px" }}
+                size="small"
+                variant="contained"
+              >
+                Add Review
+              </Button>
+            </div>
           )}
         </div>
       </div>
